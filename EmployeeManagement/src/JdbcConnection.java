@@ -1,8 +1,12 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 public class JdbcConnection {
 
-    private Connection connection;
+    private  Connection connection;
     
-    public static getConnection() 
+    public Connection getConnection()
     {
         if(null != this.connection) {
             return this.connection;
@@ -10,7 +14,7 @@ public class JdbcConnection {
         return this.createConnection();
     }
 
-    private static Connection createConnection() 
+    private Connection createConnection()
     {
         String url = "jdbc:mysql://localhost:3306/todo";
         String username = "root";
@@ -22,6 +26,8 @@ public class JdbcConnection {
         }
         catch (ClassNotFoundException e) {
             System.err.println("JDBC Driver not found: " + e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
         return this.connection;
     }
